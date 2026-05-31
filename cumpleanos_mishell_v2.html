@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumpleaños Mishell 🎀</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;overflow-x:hidden;font-family:'Nunito',sans-serif}
+
+/* ===== CANVAS DE FONDO (siempre activo) ===== */
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem;position:relative;z-index:1}
+.page.active{display:flex}
+
+/* ===== PAGE 1 – PORTADA ===== */
+#page1{text-align:center}
+
+.p1-title{font-family:'Dancing Script',cursive;font-size:clamp(2rem,7vw,3.5rem);color:#c2185b;text-shadow:2px 3px 0 #f48fb1;animation:popIn .8s ease both}
+.p1-name{font-family:'Dancing Script',cursive;font-size:clamp(3.5rem,14vw,7rem);color:#ad1457;text-shadow:3px 4px 0 #f06292;line-height:1;animation:popIn .9s ease .1s both}
+.p1-sub{font-size:clamp(.95rem,3.5vw,1.3rem);color:#e91e8c;font-weight:700;letter-spacing:3px;margin:.8rem 0 2.5rem;animation:fadeUp .8s ease .3s both}
+
+.open-btn{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,#e91e63,#c2185b);color:#fff;font-family:'Dancing Script',cursive;font-size:1.7rem;border:none;border-radius:50px;padding:1rem 2.8rem;cursor:pointer;box-shadow:0 8px 28px #f0629260;animation:glow 2s ease-in-out infinite, fadeUp .8s ease .5s both;transition:transform .15s}
+.open-btn:hover{transform:scale(1.06)}
+@keyframes glow{0%,100%{box-shadow:0 8px 28px #f0629260}50%{box-shadow:0 8px 36px #e91e6390}}
+
+@keyframes popIn{0%{opacity:0;transform:scale(.5) translateY(-20px)}70%{transform:scale(1.05) translateY(4px)}100%{opacity:1;transform:scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PAGE 2 – SOBRE ===== */
+#page2{text-align:center}
+.p2-title{font-family:'Dancing Script',cursive;font-size:clamp(1.8rem,6vw,2.8rem);color:#c2185b;margin-bottom:2rem;text-shadow:1px 2px 0 #f48fb1;animation:fadeUp .7s ease both}
+
+.envelope-wrap{cursor:pointer;user-select:none}
+.envelope{position:relative;width:min(360px,88vw)}
+
+.env-body{width:100%;height:min(240px,56vw);background:linear-gradient(135deg,#f8bbd0,#f48fb1);border-radius:8px 8px 18px 18px;position:relative;overflow:hidden;border:3px solid #e91e63;box-shadow:0 14px 48px #c2185b28}
+.env-tri-l{position:absolute;bottom:0;left:0;width:52%;height:100%;background:linear-gradient(to bottom right,#f06292,#f8bbd0);clip-path:polygon(0 100%,0 0,100% 100%)}
+.env-tri-r{position:absolute;bottom:0;right:0;width:52%;height:100%;background:linear-gradient(to bottom left,#ec407a,#f8bbd0);clip-path:polygon(100% 100%,100% 0,0 100%)}
+.env-bottom{position:absolute;bottom:0;left:0;width:100%;height:46%;background:#fce4ec}
+
+.env-flap{position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(160deg,#e91e63,#f06292);clip-path:polygon(0 0,50% 100%,100% 0);transform-origin:top center;transition:transform .7s cubic-bezier(.4,0,.2,1);z-index:10;border-radius:8px 8px 0 0}
+.env-flap.open{transform:rotateX(-180deg)}
+.env-seal{position:absolute;top:14%;left:50%;transform:translateX(-50%);width:52px;height:52px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;z-index:11;border:3px solid #f06292;box-shadow:0 2px 14px #c2185b40;transition:opacity .3s}
+.env-seal.hidden{opacity:0;pointer-events:none}
+
+.env-hint{margin-top:1.8rem;font-family:'Dancing Script',cursive;font-size:1.5rem;color:#c2185b;animation:glow 2s ease-in-out infinite}
+
+/* ===== PAGE 3 – CARTA ===== */
+#page3{padding:2rem 1rem 3rem}
+.p3-title{font-family:'Dancing Script',cursive;font-size:clamp(1.8rem,6vw,2.8rem);color:#c2185b;margin-bottom:1.5rem;text-align:center;text-shadow:1px 2px 0 #f48fb1}
+
+.letter-wrap{max-width:620px;width:100%;position:relative}
+.letter-card{background:rgba(255,255,255,.92);border-radius:24px;padding:2.4rem 2rem;box-shadow:0 14px 52px #f0629230;border:2px solid #f48fb1;position:relative;animation:fadeUp .6s ease both}
+.letter-glow{position:absolute;inset:-3px;border-radius:26px;background:linear-gradient(135deg,#f48fb1,#e91e63,#f48fb1);z-index:-1}
+
+.letter-hi{font-family:'Dancing Script',cursive;font-size:clamp(1.6rem,5vw,2.2rem);color:#c2185b;text-align:center;margin-bottom:1.2rem}
+.letter-body{font-size:clamp(.93rem,2.8vw,1.05rem);color:#4a1a2e;line-height:1.9;white-space:pre-line}
+.letter-sign{font-family:'Dancing Script',cursive;font-size:1.6rem;color:#e91e63;text-align:right;margin-top:1.4rem}
+
+.nav-back{background:none;border:2px solid #f48fb1;color:#c2185b;border-radius:50px;padding:.5rem 1.4rem;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:1.5rem;transition:background .2s}
+.nav-back:hover{background:#fce4ec}
+
+.celebrate-btn{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#e91e63,#c2185b);color:#fff;font-family:'Dancing Script',cursive;font-size:1.5rem;border:none;border-radius:50px;padding:.9rem 2.2rem;cursor:pointer;box-shadow:0 6px 22px #e91e6350;transition:transform .15s;margin-top:1.5rem}
+.celebrate-btn:hover{transform:scale(1.05)}
+
+/* Fireworks canvas */
+#fwCanvas{position:fixed;top:0;left:0;pointer-events:none;z-index:999;display:none}
+</style>
+</head>
+<body>
+
+<!-- Fondo animado siempre visible -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="page active" id="page1">
+  <p class="p1-title">✨ Feliz Cumpleaños ✨</p>
+  <h1 class="p1-name">Mishell</h1>
+  <p class="p1-sub">🎀 27 vueltas al sol 🎀</p>
+  <button class="open-btn" onclick="goTo(2)">💌 Abrir su carta</button>
+</div>
+
+<!-- ============ PAGE 2 ============ -->
+<div class="page" id="page2">
+  <p class="p2-title">Hay algo especial para ti 🎀</p>
+  <div class="envelope-wrap" onclick="openEnvelope()">
+    <div class="envelope">
+      <div class="env-body">
+        <div class="env-tri-l"></div>
+        <div class="env-tri-r"></div>
+        <div class="env-bottom"></div>
+      </div>
+      <div class="env-flap" id="envFlap"></div>
+      <div class="env-seal" id="envSeal">💝</div>
+    </div>
+  </div>
+  <p class="env-hint" id="envHint">👆 Toca para abrir</p>
+</div>
+
+<!-- ============ PAGE 3 ============ -->
+<div class="page" id="page3">
+  <button class="nav-back" onclick="goTo(1)">← Volver</button>
+  <p class="p3-title">Tu cartita 💌</p>
+  <div class="letter-wrap">
+    <div class="letter-glow"></div>
+    <div class="letter-card">
+      <p class="letter-hi">Holi Mishell 🌸</p>
+      <p class="letter-body">Holi, no sabía muy bien cómo empezar este mensaje jajaja, es la primera vez que hago algo así.
+
+Primero que nada, quiero decirte que eres una persona muy importante para mí. En todo este tiempo que hemos compartido juntos he aprendido muchas cosas sobre ti y te he agarrado muchísimo cariño. Tanto así que, en muchas ocasiones, se me hace difícil no extrañarte. Me encanta el tiempo que pasamos juntos, las cosas que hacemos y todos esos momentos que, aunque parezcan simples, terminan siendo muy especiales para mí.
+
+Hoy es un día especial porque diste una vueltita más al sol; ya son 27 veranitos, como dicen algunos jajaja. Quiero desearte un muy feliz cumpleaños y espero de todo corazón que este nuevo año de vida te traiga muchas alegrías, experiencias bonitas y que todo lo que te propongas salga de la mejor manera.
+
+Y sí, literalmente es la primera vez que pasamos tu cumpleaños juntos jajaja, así que también hace que este día sea especial para mí. 🥹
+
+Quiero que sepas que te quiero mucho y que nunca lo olvides. Siempre voy a adorar la forma en la que eres conmigo, porque me haces sentir muy feliz y valorado. Estoy muy agradecido de haberte conocido y de poder compartir tiempo contigo, porque cada momento a tu lado es divertido, agradable y me deja con ganas de más.
+
+Espero que hoy la pases increíble, que te consientan mucho y que recibas todo el cariño que mereces, porque luego me toca a mí. 😊
+
+Te mando muchos besos y abrazos. Nos vemos más tarde bb. ❤️</p>
+      <p class="letter-sign">Con todo mi cariño 💕</p>
+    </div>
+  </div>
+  <button class="celebrate-btn" onclick="launchFireworks()">🎆 ¡Celebrar! 🎆</button>
+</div>
+
+<canvas id="fwCanvas"></canvas>
+
+<script>
+// ===== NAVEGACIÓN =====
+const pages = [null,
+  document.getElementById('page1'),
+  document.getElementById('page2'),
+  document.getElementById('page3')];
+
+function goTo(n){
+  pages.forEach(p=>p&&p.classList.remove('active'));
+  pages[n].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ===== SOBRE =====
+let opened=false;
+function openEnvelope(){
+  if(opened)return; opened=true;
+  document.getElementById('envFlap').classList.add('open');
+  document.getElementById('envSeal').classList.add('hidden');
+  document.getElementById('envHint').textContent='✨ Abriendo tu cartita... ✨';
+  setTimeout(()=>goTo(3),1200);
+}
+
+// ===== FONDO ANIMADO =====
+const bgC = document.getElementById('bgCanvas');
+const bgX = bgC.getContext('2d');
+let W,H,particles=[];
+
+function resize(){
+  W=bgC.width=window.innerWidth;
+  H=bgC.height=window.innerHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+// Tipos de partículas
+const TYPES=['heart','star','circle','petal','sparkle'];
+const COLORS=['#f48fb1','#f06292','#e91e63','#fce4ec','#f8bbd0','#ffb7c5','#fff0f5','#ad1457','#ffd6e0'];
+
+function makeParticle(){
+  const type=TYPES[Math.floor(Math.random()*TYPES.length)];
+  const size=type==='heart'?18+Math.random()*32
+             :type==='star'?14+Math.random()*24
+             :type==='petal'?12+Math.random()*22
+             :10+Math.random()*18;
+  return{
+    x:Math.random()*W,
+    y:H+size,
+    size,
+    type,
+    color:COLORS[Math.floor(Math.random()*COLORS.length)],
+    speed:.4+Math.random()*1.1,
+    drift:(Math.random()-.5)*.6,
+    rot:Math.random()*Math.PI*2,
+    rotSpeed:(Math.random()-.5)*.04,
+    alpha:.25+Math.random()*.65,
+    wobble:Math.random()*Math.PI*2,
+    wobbleSpeed:.02+Math.random()*.03,
+    wobbleAmp:12+Math.random()*20
+  };
+}
+
+// Inicializar partículas dispersas
+for(let i=0;i<55;i++){
+  const p=makeParticle();
+  p.y=Math.random()*H*1.1;
+  particles.push(p);
+}
+
+function drawHeart(ctx,x,y,s,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(s/18,s/18);
+  ctx.beginPath();
+  ctx.moveTo(0,-6);
+  ctx.bezierCurveTo(0,-14,14,-14,14,-4);
+  ctx.bezierCurveTo(14,4,0,14,0,18);
+  ctx.bezierCurveTo(0,14,-14,4,-14,-4);
+  ctx.bezierCurveTo(-14,-14,0,-14,0,-6);
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
+function drawStar(ctx,x,y,s,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+  ctx.beginPath();
+  for(let i=0;i<5;i++){
+    const a1=i*Math.PI*.4-Math.PI/2;
+    const a2=a1+Math.PI*.2;
+    ctx.lineTo(Math.cos(a1)*s,Math.sin(a1)*s);
+    ctx.lineTo(Math.cos(a2)*(s*.4),Math.sin(a2)*(s*.4));
+  }
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
+function drawPetal(ctx,x,y,s,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+  ctx.beginPath();
+  ctx.ellipse(0,-s*.5,s*.35,s*.6,0,0,Math.PI*2);
+  ctx.fill();ctx.restore();
+}
+
+function drawSparkle(ctx,x,y,s,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+  ctx.lineWidth=s*.12;ctx.strokeStyle=ctx.fillStyle;
+  for(let i=0;i<4;i++){
+    const a=i*Math.PI*.5;
+    ctx.beginPath();
+    ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function bgLoop(){
+  bgX.clearRect(0,0,W,H);
+
+  // Degradado de fondo
+  const grad=bgX.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,'#fce4ec');
+  grad.addColorStop(.5,'#f8bbd0');
+  grad.addColorStop(1,'#fce4ec');
+  bgX.fillStyle=grad;
+  bgX.fillRect(0,0,W,H);
+
+  // Actualizar y dibujar partículas
+  particles.forEach((p,i)=>{
+    p.y-=p.speed;
+    p.wobble+=p.wobbleSpeed;
+    p.x+=Math.sin(p.wobble)*p.drift;
+    p.rot+=p.rotSpeed;
+
+    bgX.globalAlpha=p.alpha;
+    bgX.fillStyle=p.color;
+
+    if(p.type==='heart')       drawHeart(bgX,p.x,p.y,p.size,p.rot);
+    else if(p.type==='star')   drawStar(bgX,p.x,p.y,p.size,p.rot);
+    else if(p.type==='petal')  drawPetal(bgX,p.x,p.y,p.size,p.rot);
+    else if(p.type==='sparkle')drawSparkle(bgX,p.x,p.y,p.size,p.rot);
+    else{
+      bgX.beginPath();
+      bgX.arc(p.x,p.y,p.size*.5,0,Math.PI*2);
+      bgX.fill();
+    }
+
+    if(p.y<-p.size*2){
+      particles[i]=makeParticle();
+    }
+  });
+
+  bgX.globalAlpha=1;
+  requestAnimationFrame(bgLoop);
+}
+bgLoop();
+
+// ===== FIREWORKS =====
+const fwC=document.getElementById('fwCanvas');
+const fwX=fwC.getContext('2d');
+let fwParts=[], fwAnim;
+
+function launchFireworks(){
+  fwC.style.display='block';
+  fwC.width=window.innerWidth;
+  fwC.height=window.innerHeight;
+  fwParts=[];
+  const cols=['#f06292','#f48fb1','#e91e63','#ffd54f','#fff176','#ff80ab','#ea80fc','#ffffff','#f8bbd0'];
+  for(let b=0;b<12;b++){
+    const x=80+Math.random()*(fwC.width-160);
+    const y=60+Math.random()*(fwC.height*.55);
+    const c=cols[Math.floor(Math.random()*cols.length)];
+    for(let i=0;i<70;i++){
+      const angle=(i/70)*Math.PI*2;
+      const speed=2+Math.random()*6;
+      fwParts.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,alpha:1,color:c,r:2+Math.random()*3.5});
+    }
+  }
+  cancelAnimationFrame(fwAnim);
+  animFw();
+  setTimeout(()=>{cancelAnimationFrame(fwAnim);fwC.style.display='none';},3800);
+}
+
+function animFw(){
+  fwX.clearRect(0,0,fwC.width,fwC.height);
+  fwParts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.alpha-=.013;
+    if(p.alpha<=0)return;
+    fwX.globalAlpha=p.alpha;fwX.fillStyle=p.color;
+    fwX.beginPath();fwX.arc(p.x,p.y,p.r,0,Math.PI*2);fwX.fill();
+  });
+  fwX.globalAlpha=1;
+  fwAnim=requestAnimationFrame(animFw);
+}
+</script>
+</body>
+</html>
